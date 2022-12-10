@@ -1,0 +1,20 @@
+{% load static %}
+
+<!-- main -->
+<main>
+    <div class="container">
+        <p class="heading intro-title">{{content.main_sentence}}</p>
+        <p class="sub-text">{{content.sub_sentence}}</p>
+        <div class="search">
+            <input type="text" placeholder="ابحث عن كتاب أو مطبوعة">
+            <img src="{% static './assets/images/search-outline.svg' %}" alt="">
+        </div>
+        <div class="cta">
+            <!-- <a href="#" class="btn btn-solid-dark">الكورسات</a> -->
+            <a href="{% url 'pages:suggest' %}" class="btn btn-solid-dark">ترشيح مصنف</a>
+            <a href="#" class="btn btn-outline-light">بحث متقدم</a>
+        </div>
+
+
+    </div>
+</main>
