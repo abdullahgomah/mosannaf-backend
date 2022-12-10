@@ -1,6 +1,7 @@
 from django.db import models
 
 from publisher.models import Publisher
+from printinghouse.models import PrintingHouse
 
 # Create your models here
 
@@ -67,10 +68,13 @@ class Mosannaf(models.Model):
     print_year = models.CharField(verbose_name="سنة الطباعة", max_length=20)
     print_number = models.CharField(verbose_name="رقم الطباعة", max_length=20)
 
-    # printing_house
+    printing_house = models.ForeignKey(PrintingHouse, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="المطبعة")
 
     publish_year = models.CharField(verbose_name="سنة النشر", max_length=20)
     # publish_year = models.DateField(verbose_name="سنة النشر", viewMode='years')
+
+    isbn = models.CharField(verbose_name='ردمك', max_length=50)
+
 
     def __str__(self):
         return self.name
@@ -281,3 +285,84 @@ class Chapter(models.Model):
     class Meta:
         verbose_name = 'فصل'
         verbose_name_plural = 'الفصول'
+
+
+
+## Translated Mosannaf مصنف مترجم
+class TranslatedMosannaf(models.Model):
+    mosannaf = models.ForeignKey(Mosannaf, on_delete=models.CASCADE, verbose_name='المصنف')
+    #1# اللغة 
+    language = models.ForeignKey(Lang, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='اللغة')
+    #2# تاريخ الإصدار المترجم
+    
+    #3# ناشر الترجمة
+    translate_publisher = models.CharField(max_length=200, verbose_name='ناشر الترجمة')
+    #4# صورة المصنف المترجم
+    cover = models.ImageField(verbose_name="صورة المصنف المترجم", upload_to="Motargam/Covers")
+    #5# صيغة المصنف 
+    tm_format = models.ForeignKey(Formats, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="صيغة المترجم")
+    #6# شكل المصنف 
+    form = models.ForeignKey(Forms, on_delete=models.CASCADE, null=True, blank=True, verbose_name="شكل المصنف")
+    #7# حجم المصنف
+    size = models.CharField(max_length=100, verbose_name='حجم المصنف المترجم') 
+
+    #8# قياس المصنف
+    mesaurement = models.CharField(max_length=100, verbose_name="قياس المصنف")
+
+    #9# إعداد 
+    preparation = models.CharField(max_length=100, verbose_name='اعداد')
+
+    #10 حقل المؤلف يورث من جدول المصنف الأساسي
+    
+    #11# المحقق 
+    checker = models.CharField(max_length=200, verbose_name='المحقق')
+    
+    #12# الناشر
+    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="الناشر")
+    
+    #13# طبعة سنة 
+    print_year = models.CharField(verbose_name="سنة الطباعة", max_length=20)
+   
+    #14# طبعة رقم 
+    print_number = models.CharField(verbose_name="رقم الطباعة", max_length=20)
+
+    #15# مطبعة
+    printing_house = models.ForeignKey(PrintingHouse, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="المطبعة")
+
+
+    #16# سنة النشر
+    publish_year = models.CharField(verbose_name="سنة النشر", max_length=20)
+    
+    
+    
+    
+    #17# ردمك الترجمة
+    translation_isbn = models.CharField(
+        verbose_name='ردمك الترجمة', max_length=50)
+
+    #18# ردمد 
+    issn = models.CharField(verbose_name='ردمد', max_length=50)
+
+    #19# رقم الايداع
+    deposit_number = models.CharField(
+        verbose_name='رقم الايداع', max_length=60)
+
+    # iso 
+    iso = models.CharField(max_length=200)
+
+
+    #20# فنان الغلاف 
+    cover_artist = models.CharField(max_length=200, verbose_name="فنان الغلاف")
+    
+    #21# سلسلة 
+    chain = models.CharField(max_length=100, verbose_name="السلسلة")
+
+    #22# قسم
+    branch = models.CharField(max_length=100, verbose_name="القسم")
+
+    def __str__(self):
+        return f"مترجم {self.mosannaf.name}"
+
+    class Meta:
+        verbose_name='مترجم مصنف'
+        verbose_name_plural = "مترجمات المصنفات"

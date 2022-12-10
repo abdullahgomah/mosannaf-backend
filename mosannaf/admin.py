@@ -20,3 +20,5 @@ admin.site.register(Measurement)
 admin.site.register(Preparation)
 admin.site.register(Author)
 admin.site.register(Checker)
+
+admin.site.register(TranslatedMosannaf) 
