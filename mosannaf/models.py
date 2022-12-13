@@ -21,21 +21,30 @@ class Mosannaf(models.Model):
     pages_count = models.IntegerField(default=0, verbose_name='الصفحات')
     units_count = models.IntegerField(default=0, verbose_name='اﻷبواب')
     chapters_count = models.IntegerField(default=0, verbose_name='الفصول')
-    subject = models.ForeignKey("Subject", verbose_name="الموضوع",
-                                on_delete=models.SET_NULL, blank=True, null=True)
-    unit = models.ForeignKey("Unit", verbose_name='باب',
-                             on_delete=models.SET_NULL, null=True, blank=True)
-    branch = models.ForeignKey("Branch", verbose_name='القسم',
-                               on_delete=models.SET_NULL, blank=True, null=True)
-    sub_branch = models.ForeignKey(
-        "SubBranch", verbose_name='القسم الفرعي', on_delete=models.SET_NULL, blank=True, null=True)
-    # chapter field here
-    chapter = models.ForeignKey(
-        "Chapter", verbose_name="الفصل", on_delete=models.SET_NULL, blank=True, null=True)
-    field = models.ForeignKey(
-        'Field', verbose_name='المجال', on_delete=models.SET_NULL, blank=True, null=True)
-    activity = models.ForeignKey(
-        "Activity", verbose_name='النشاط', on_delete=models.SET_NULL, blank=True, null=True)
+    # subject = models.ForeignKey("Subject", verbose_name="الموضوع",
+    #                             on_delete=models.SET_NULL, blank=True, null=True)
+    subject = models.CharField(verbose_name="الموضوع", blank=True, null=True, max_length=100)
+    # unit = models.ForeignKey("Unit", verbose_name='باب',
+    #                          on_delete=models.SET_NULL, null=True, blank=True)
+    unit = models.CharField(max_length=200, verbose_name='الباب')
+    # branch = models.ForeignKey("Branch", verbose_name='القسم',
+    #                            on_delete=models.SET_NULL, blank=True, null=True)
+    branch = models.CharField(max_length=200, verbose_name="القسم")
+    # sub_branch = models.ForeignKey(
+    #     "SubBranch", verbose_name='القسم الفرعي', on_delete=models.SET_NULL, blank=True, null=True)
+    sub_brnach = models.CharField(max_length=200, verbose_name="القسم الفرعي")
+    
+    # chapter = models.ForeignKey(
+    #     "Chapter", verbose_name="الفصل", on_delete=models.SET_NULL, blank=True, null=True)
+    chapter = models.CharField(max_length=200, verbose_name="الفصل")
+    # field = models.ForeignKey(
+    #     'Field', verbose_name='المجال', on_delete=models.SET_NULL, blank=True, null=True)
+    field = models.CharField(max_length=200, verbose_name="المجال")
+
+    # activity = models.ForeignKey(
+    #     "Activity", verbose_name='النشاط', on_delete=models.SET_NULL, blank=True, null=True)
+    activity = models.CharField(max_length=200, verbose_name="النشاط")
+
     summary = models.TextField(verbose_name='نبذه عن المصنف')
     image = models.ImageField(verbose_name='صورة المصنف', upload_to='أغلفة/',
                               height_field=None, width_field=None, max_length=None)
@@ -44,23 +53,36 @@ class Mosannaf(models.Model):
     m_format = models.ForeignKey(
         "Formats", verbose_name="صيغة المصنف", blank=True, null=True, on_delete=models.SET_NULL)
 
-    m_form = models.ForeignKey(
-        "Forms", verbose_name="شكل المصنف", blank=True, null=True, on_delete=models.SET_NULL)
+    # m_form = models.ForeignKey(
+    #     "Forms", verbose_name="شكل المصنف", blank=True, null=True, on_delete=models.SET_NULL)
+    m_form = models.CharField(max_length=200, verbose_name="شكل المصنف")
 
-    size = models.ForeignKey(
-        "Size", verbose_name="حجم المصنف", blank=True, null=True, on_delete=models.SET_NULL)
+    # size = models.ForeignKey(
+    #     "Size", verbose_name="حجم المصنف", blank=True, null=True, on_delete=models.SET_NULL)
+    m_size = models.CharField(max_length=200, verbose_name="حجم المصنف")
 
-    measurement = models.ForeignKey(
-        "Measurement", verbose_name="قياس المصنف", blank=True, null=True, on_delete=models.SET_NULL)
 
-    preparation = models.ForeignKey(
-        "Preparation", verbose_name='إعداد', on_delete=models.SET_NULL, blank=True, null=True)
+    # measurement = models.ForeignKey(
+    #     "Measurement", verbose_name="قياس المصنف", blank=True, null=True, on_delete=models.SET_NULL)
 
-    author = models.ForeignKey(
-        "Author", verbose_name='تأليف', on_delete=models.SET_NULL, blank=True, null=True)
+    measurement = models.CharField(max_length=200, verbose_name="قياس المصنف")
 
-    checker = models.ForeignKey(
-        "Checker", verbose_name='المحقق', on_delete=models.SET_NULL, blank=True, null=True)
+
+    # preparation = models.ForeignKey(
+    #     "Preparation", verbose_name='إعداد', on_delete=models.SET_NULL, blank=True, null=True)
+    preparation = models.CharField(max_length=200, verbose_name="إعداد")
+    
+
+    # author = models.ForeignKey(
+    #     "Author", verbose_name='تأليف', on_delete=models.SET_NULL, blank=True, null=True)
+
+    author = models.CharField(max_length=200, verbose_name="تأليف")
+
+
+    # checker = models.ForeignKey(
+    #     "Checker", verbose_name='المحقق', on_delete=models.SET_NULL, blank=True, null=True)
+    checker = models.CharField(max_length=200, verbose_name="المحقق")
+    
 
     publisher = models.ForeignKey(
         "publisher.Publisher", verbose_name='ناشر', on_delete=models.SET_NULL, blank=True, null=True)
@@ -302,7 +324,7 @@ class TranslatedMosannaf(models.Model):
     #5# صيغة المصنف 
     tm_format = models.ForeignKey(Formats, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="صيغة المترجم")
     #6# شكل المصنف 
-    form = models.ForeignKey(Forms, on_delete=models.CASCADE, null=True, blank=True, verbose_name="شكل المصنف")
+    form = models.CharField(max_length=200, null=True, blank=True, verbose_name="شكل المصنف")
     #7# حجم المصنف
     size = models.CharField(max_length=100, verbose_name='حجم المصنف المترجم') 
 
