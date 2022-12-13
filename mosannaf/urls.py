@@ -5,5 +5,7 @@ app_name = 'mosannaf'
 
 
 urlpatterns = [
+    path('', all, name='all'), 
     path('details/<int:id>', details, name='details'),
+    path('query/', search, name='search'),
 ]

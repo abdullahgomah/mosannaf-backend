@@ -106,6 +106,21 @@ class Mosannaf(models.Model):
         verbose_name_plural = 'المصنفات'
 
 
+# تقييم المصنف
+class Rate(models.Model):
+    mosannaf = models.ForeignKey(Mosannaf, on_delete=models.CASCADE, verbose_name="المصنف", related_name='mosannaf_rate')
+    details = models.TextField(max_length=500, verbose_name="التقييم")
+
+    def __str__(self):
+        return f"تقييم {self.mosannaf.name}"
+    
+    class Meta:
+        verbose_name = 'تقييم'
+        verbose_name_plural = "التقييمات"
+
+
+
+
 class Type(models.Model):
     name = models.CharField(max_length=250, verbose_name='نوع المصنف')
 

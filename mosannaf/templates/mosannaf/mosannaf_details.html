@@ -139,7 +139,7 @@
         <div class="heading">
             <h1>تقييمات</h1>
         </div>
-        <div class="feedback">
+        <!-- <div class="feedback">
             <div class="feedback-account">
                 <p class="feedback-account__user">عبدالله محمد</p>
                 <div class="feedback-account__rate">
@@ -148,7 +148,6 @@
                         <i class="fas fa-star-half "></i>
                     </div>
                     <p>
-                        <!-- provided by django -->
                         (1.5 / 5)
                     </p>
                 </div>
@@ -156,7 +155,8 @@
             <div class="feedback-details">
                 <p>كتاب ملئ بالتفاصيل الغير مهمة تجعلك تمل من قراءته</p>
             </div>
-        </div>
+        </div> -->
+        {% for rate in rates %}
         <div class="feedback">
             <div class="feedback-account">
                 <p class="feedback-account__user">ام محمد</p>
@@ -173,12 +173,11 @@
             </div>
             <div class="feedback-details">
                 <p>
-                    كأم, الكتاب ساعندي كثير ﻷتعلم كيف اتعامل مع ابني المراهق وساعدني اتعامل معه مش بس كأم بل كصديقة
-                    ﻷبني
+                    {{rate.details}}
                 </p>
             </div>
         </div>
-
+        {% endfor %}
         <a href="" class="btn btn-solid-dark">المزيد من التقييمات</a>
     </div>
 </section>

@@ -21,4 +21,6 @@ admin.site.register(Formats)
 # admin.site.register(Author)
 # admin.site.register(Checker)
 
+
+admin.site.register(Rate) # جدول التقييمات
 admin.site.register(TranslatedMosannaf) 
