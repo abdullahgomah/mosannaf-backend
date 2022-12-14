@@ -16,12 +16,16 @@
             <h1 class="intro-heading">نتائج البحث عن: {{search_word}}</h1>
         </div>
         <div class="books swiper-wrapper">
+            {% if results %}
             {% for result in results %}
             <div class="book swiper-slide">
                 <img src="{{result.image.url}}" alt="" class="book_img">
                 <p class="book_title">{{result.name}}</p>
             </div>
             {% endfor %}
+            {% else %}
+            <h2>لا يوجد نتائج بحث</h2>
+            {% endif %}
             
 
 

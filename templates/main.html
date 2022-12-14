@@ -8,6 +8,11 @@
         <form action="{% url 'mosannaf:search' %}" method="get">
             <div class="search">
                 <input type="text" name="search_input" placeholder="ابحث عن كتاب أو مطبوعة">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="{{message.tags}}" style="color: white;">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
                 <img src="{% static './assets/images/search-outline.svg' %}" alt="">
             </div>
         </form>

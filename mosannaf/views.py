@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from .models import *
 
 # Create your views here.
@@ -28,8 +29,14 @@ def details(request, id):
 
 
 def search(request): 
-    
-    results = Mosannaf.objects.filter(name__contains=request.GET['search_input'])
+    search_input = request.GET['search_input'] 
+    if search_input != "":
+        # show message here
+        results = Mosannaf.objects.filter(name__contains=search_input)
+        
+    else:
+        messages.add_message(request, messages.ERROR,'الحقل فارغ! الرجاء كتابة كلمة البحث ')
+        results = "" 
     
     context = {
         'results': results,
@@ -37,3 +44,4 @@ def search(request):
     } 
 
     return render(request, 'mosannaf/search_results.html', context)
+
