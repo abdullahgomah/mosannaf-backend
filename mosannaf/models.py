@@ -109,7 +109,7 @@ class Mosannaf(models.Model):
 # تقييم المصنف
 class Rate(models.Model):
     mosannaf = models.ForeignKey(Mosannaf, on_delete=models.CASCADE, verbose_name="المصنف", related_name='mosannaf_rate')
-    details = models.TextField(max_length=500, verbose_name="التقييم")
+    details = models.CharField(max_length=250, verbose_name="التقييم")
 
     def __str__(self):
         return f"تقييم {self.mosannaf.name}"
