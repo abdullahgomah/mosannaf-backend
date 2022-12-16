@@ -157,39 +157,8 @@
 <section class="feedbacks" id="feedbacks">
     <div class="container">
         <div class="heading">
-            <h2>إضافة تقييم</h2>
-        </div>
-        <form action="POST" id="rate-form">
-            {% csrf_token %}
-            <div class="input rate_input">
-                {{form}}
-            </div>
-            <button type="submit" class="btn btn-solid-dark">إرسال</button>
-        </form>
-        <div class="heading">
             <h2>التقييمات السابقة</h2>
         </div>
-        <!-- <div class="feedback">
-            <div class="feedback-account">
-                <p class="feedback-account__user">عبدالله محمد</p>
-                <div class="feedback-account__rate">
-                    <div class="stars">
-                        <i class="fas fa-star "></i>
-                        <i class="fas fa-star-half "></i>
-                    </div>
-                    <p>
-                        (1.5 / 5)
-                    </p>
-                </div>
-            </div>
-            <div class="feedback-details">
-                <p>كتاب ملئ بالتفاصيل الغير مهمة تجعلك تمل من قراءته</p>
-            </div>
-        </div> -->
-
-
-        <!-- add rate form here -->
-
 
         {% for rate in rates %}
         <div class="feedback">
@@ -221,50 +190,5 @@
 {% endblock content %}
 
 {% block javascript %}
-<script>
-    let rate_input = document.querySelector('.rate_input'); 
-    rate_input.querySelector('input').setAttribute('placeholder', "اكتب تقييمك هنا")
 
-
-    $("#rate-form").submit(function (e) {
-        e.preventDefault(); 
-        var serializedData = $(this).serialize();
-        $.ajax({
-            type: 'POST', 
-            url: "{% url 'mosannaf:add-rate' %}",
-            data: serializedData, 
-            success: function (response) {
-                $("#rate-form").trigger('reset');
-                var instance = JSON.parse(response["instance"]);
-                var fields = instance[0]["fields"];
-                $("#feedbacks").prepend(
-                    `        <div class="feedback">
-            <div class="feedback-account">
-                <p class="feedback-account__user">أم محمد</p>
-                <div class="feedback-account__rate">
-                    <div class="stars">
-                        <i class="fas fa-star "></i>
-                        <i class="fas fa-star-half "></i>
-                    </div>
-                    <p>
-                        <!-- provided by django -->
-                        (4.8 / 5)
-                    </p>
-                </div>
-            </div>
-            <div class="feedback-details">
-                <p>
-                    ${fields['details']}
-                </p>
-            </div>
-        </div>`
-                )
-            }, 
-            error: function (response) {
-                alert(response['responseJSON']['error']);
-            }
-        })
-    })
-
-</script>
 {% endblock javascript %}

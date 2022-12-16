@@ -49,26 +49,3 @@ def search(request):
     } 
 
     return render(request, 'mosannaf/search_results.html', context)
-
-
-
-
-def add_rate(request):
-    # request should be ajax and method should be POST.
-    if request.method == "POST":
-        # get the form data
-        form = RateForm(request.POST)
-        
-        # save the data and after fetch the object in instance
-        if form.is_valid():
-            instance = form.save()
-            # serialize in new friend object in json
-            ser_instance = serializers.serialize('json', [ instance, ])
-            # send to client side.
-            return JsonResponse({"instance": ser_instance}, status=200)
-        else:
-            # some form errors occured.
-            return JsonResponse({"error": form.errors}, status=400)
-
-    # some error occured
-    return JsonResponse({"error": ""}, status=400)
