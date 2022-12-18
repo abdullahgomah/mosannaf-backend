@@ -17,3 +17,4 @@ tomli==2.0.1
 tqdm==4.64.1
 typing-extensions==4.4.0
 tzdata==2022.7
+backports.zoneinfo;python_version<"3.9"
