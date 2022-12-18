@@ -157,31 +157,42 @@
 <section class="feedbacks" id="feedbacks">
     <div class="container">
         <div class="heading">
+            <h2>إضافة تقييم</h2>
+        </div>
+        <form method="POST" id="add-feedback">
+            {% csrf_token %}
+            <div class="input">
+                {{form1}}
+                <button type="submit" id="send-button" class="btn btn-solid-dark">إرسال</button>
+            </div>
+        </form>
+        <div class="heading">
             <h2>التقييمات السابقة</h2>
         </div>
 
-        {% for rate in rates %}
-        <div class="feedback">
-            <div class="feedback-account">
-                <p class="feedback-account__user">ام محمد</p>
-                <div class="feedback-account__rate">
-                    <div class="stars">
-                        <i class="fas fa-star "></i>
-                        <i class="fas fa-star-half "></i>
+        <div id="feedbacks-container" data-url="">
+            <!-- {% for rate in rates %}
+            <div class="feedback">
+                <div class="feedback-account">
+                    <p class="feedback-account__user">ام محمد</p>
+                    <div class="feedback-account__rate">
+                        <div class="stars">
+                            <i class="fas fa-star "></i>
+                            <i class="fas fa-star-half "></i>
+                        </div>
+                        <p>
+                            (4.8 / 5)
+                        </p>
                     </div>
+                </div>
+                <div class="feedback-details">
                     <p>
-                        <!-- provided by django -->
-                        (4.8 / 5)
+                        {{rate.details}}
                     </p>
                 </div>
             </div>
-            <div class="feedback-details">
-                <p>
-                    {{rate.details}}
-                </p>
-            </div>
+            {% endfor %} -->
         </div>
-        {% endfor %}
         <a href="" class="btn btn-solid-dark">المزيد من التقييمات</a>
     </div>
 </section>
@@ -190,5 +201,48 @@
 {% endblock content %}
 
 {% block javascript %}
+<script>
+    document.querySelector('input[name=details]').setAttribute('placeholder', "اكتب تقييمك هنا")
 
+
+    function getFeedbacks() {
+        $.ajax({
+            type: 'GET', 
+            url: '{% url "mosannaf:get-feedbacks" %}', 
+            data: {
+                mosannaf_id: '{{mosannaf.id}}',
+                action: 'get'
+            }, 
+            success: function(response) { 
+                feedbacks = response['feedbacks']; 
+                $('#feedbacks-container').html(response);
+            }, error: function(xhr, errmsg, err) {
+
+            }
+        })
+    }
+
+    getFeedbacks(); 
+
+    $(document).on('click', '#send-button', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "mosannaf:add-rate" %}',
+            data: {
+                mosannaf_id: '{{mosannaf.id}}',
+                details: $("input[name=details]").val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            }, 
+            success: function(json) {
+                getFeedbacks();
+
+                document.querySelector("#add-feedback").reset();
+            }, error: function (xhr, errmsg, err) {
+                
+            }
+        })
+    })
+</script>
 {% endblock javascript %}
