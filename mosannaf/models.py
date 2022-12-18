@@ -16,7 +16,7 @@ class Mosannaf(models.Model):
     original_lang = models.ForeignKey(
         "Lang", verbose_name="أصل لغة المصنف", on_delete=models.SET_NULL, null=True, blank=True)
     date_published = models.DateField(
-        verbose_name='تاريخ النشر')
+        verbose_name='تاريخ النشر', null=True, blank=True)
     parts_count = models.IntegerField(default=0, verbose_name='الأجزاء')
     pages_count = models.IntegerField(default=0, verbose_name='الصفحات')
     units_count = models.IntegerField(default=0, verbose_name='اﻷبواب')
@@ -96,6 +96,21 @@ class Mosannaf(models.Model):
     # publish_year = models.DateField(verbose_name="سنة النشر", viewMode='years')
 
     isbn = models.CharField(verbose_name='ردمك', max_length=50)
+
+    #18# ردمد 
+    issn = models.CharField(verbose_name='ردمد', max_length=50)
+
+    #19# رقم الايداع
+    deposit_number = models.CharField(
+        verbose_name='رقم الايداع', max_length=60)
+
+    # iso 
+    iso = models.CharField(max_length=200, verbose_name='ايزو')
+
+
+    #20# فنان الغلاف 
+    cover_artist = models.CharField(max_length=200, verbose_name="فنان الغلاف")
+    
 
 
     def __str__(self):
@@ -328,28 +343,36 @@ class Chapter(models.Model):
 ## Translated Mosannaf مصنف مترجم
 class TranslatedMosannaf(models.Model):
     mosannaf = models.ForeignKey(Mosannaf, on_delete=models.CASCADE, verbose_name='المصنف')
+
     #1# اللغة 
     language = models.ForeignKey(Lang, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='اللغة')
+
     #2# تاريخ الإصدار المترجم
-    
+    data_published = models.DateField(auto_now=False, verbose_name="تاريخ الإصدار المترجم", null=True, blank=True)
+
     #3# ناشر الترجمة
     translate_publisher = models.CharField(max_length=200, verbose_name='ناشر الترجمة')
+
     #4# صورة المصنف المترجم
     cover = models.ImageField(verbose_name="صورة المصنف المترجم", upload_to="Motargam/Covers")
+
     #5# صيغة المصنف 
     tm_format = models.ForeignKey(Formats, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="صيغة المترجم")
+
     #6# شكل المصنف 
-    form = models.CharField(max_length=200, null=True, blank=True, verbose_name="شكل المصنف")
+    tm_form = models.CharField(max_length=200, null=True, blank=True, verbose_name="شكل المصنف")
+
     #7# حجم المصنف
-    size = models.CharField(max_length=100, verbose_name='حجم المصنف المترجم') 
+    tm_size = models.CharField(max_length=100, verbose_name='حجم المصنف المترجم') 
 
     #8# قياس المصنف
-    mesaurement = models.CharField(max_length=100, verbose_name="قياس المصنف")
+    tm_mesaurement = models.CharField(max_length=100, verbose_name="قياس المصنف")
 
     #9# إعداد 
     preparation = models.CharField(max_length=100, verbose_name='اعداد')
 
-    #10 حقل المؤلف يورث من جدول المصنف الأساسي
+    #10 حقل المؤلف
+    publisher = models.CharField(max_length=100, verbose_name="الناشر")
     
     #11# المحقق 
     checker = models.CharField(max_length=200, verbose_name='المحقق')
