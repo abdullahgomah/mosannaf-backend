@@ -152,7 +152,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Here Country Settings
-
-
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
