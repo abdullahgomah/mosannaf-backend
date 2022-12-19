@@ -42,16 +42,6 @@ class PrintingHouse(models.Model):
     email = models.EmailField(
         verbose_name="البريد الإلكتروني", max_length=150)  # البريد الإلكتروني
 
-    isbn = models.CharField(verbose_name='ردمك', max_length=50)
-    translation_isbn = models.CharField(
-        verbose_name='ردمك الترجمة', max_length=50)
-
-    issn = models.CharField(verbose_name='ردمد', max_length=50)
-
-    deposit_number = models.CharField(
-        verbose_name='رقم الايداع', max_length=60)
-
-    iso = models.CharField(max_length=200)
 
     # فنان الغلاف
     # سلسلة

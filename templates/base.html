@@ -31,7 +31,7 @@
             <div class="header-nav">
                 <ul>
                     <li><a href="{% url 'pages:index' %}" class="list-item">الرئيسية</a></li>
-                    <li><a href="#" class="list-item">المصنفات</a></li>
+                    <li><a href="{% url 'mosannaf:all' %}" class="list-item">المصنفات</a></li>
                     <!-- <li><a href="#" class="list-item">الكورسات</a></li> -->
                     <li><a href="{% url 'pages:contact' %}" class="list-item">اتصل بنا</a></li>
                 </ul>
@@ -45,7 +45,7 @@
             </div>
             <div class="profile">
                 <a href="#" class="list-item black">
-                    <img src="./assets/images/profile-img.jpg" class="profile-img" alt="">
+                    <img src="{% static './assets/images/profile-img.jpg' %}" class="profile-img" alt="">
                     <!-- <i class="fas fa-user    "></i> -->
                 </a>
             </div>
@@ -85,6 +85,7 @@
     {% block content %}
     {% endblock content %}
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script src="{% static './js/swiper.js' %}"></script>
 
@@ -100,6 +101,9 @@
     </script>
 
     {% block javascript %}
+
+    
+
     {% endblock javascript %}
 
     <!-- <script>
