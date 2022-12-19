@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'printinghouse',
     'publisher',
     'mosannaf',
-    'dashboard', 
 
 ]
 
